@@ -1,14 +1,33 @@
+import mongoose from "mongoose";
+
 export class User {
-    id: number;
+    id: string;
     name: string;
     email: string;
 
-    constructor(id: number, name: string, email: string) {
-        this.id = id; // Initialisation de la propriété id avec la valeur du paramètre id
-        this.name = name; // Initialisation de la propriété name avec la valeur du paramètre name
-        this.email = email; // Initialisation de la propriété email avec la valeur du paramètre email
+    constructor(id: string, name: string, email: string) {
+        this.id = id; 
+        this.name = name; 
+        this.email = email;
     }
 }
+
+
+export const UserSchema = new mongoose.Schema({
+    id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        auto: true,
+    },
+    name :{
+        type: String,
+        required: true,
+    },
+    email :{
+        type: String,
+        required: true,
+    }
+});
 
 
 
