@@ -5,5 +5,6 @@ export interface IBaseDataSource<T> {
     getAll(): Promise<T[]>;
     query(filter: any): Promise<T[]>;
     count(): Promise<number>;
+    findOne(query: any): Promise<T | null>;
     dispose(): void;
 }

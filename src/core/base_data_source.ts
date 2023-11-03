@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { IBaseDataSource } from "./ibase_data_source";
 
 export class BaseDataSource<T> implements IBaseDataSource<T> {
-    model: mongoose.Model<T & mongoose.Document>;
+    private model: mongoose.Model<T & mongoose.Document>;
 
     constructor(schema: mongoose.Schema, collection: string) {
         this.model = mongoose.model<T & mongoose.Document>(collection, schema);
@@ -20,6 +20,10 @@ export class BaseDataSource<T> implements IBaseDataSource<T> {
 
     async findById(id: string): Promise<T> {
         return (await this.model.findById(id).exec())?.toObject();
+    }
+
+    async findOne(query: any): Promise<T> {
+        return (await this.model.findOne(query).exec())?.toObject();
     }
 
     async getAll(): Promise<T[]> {
