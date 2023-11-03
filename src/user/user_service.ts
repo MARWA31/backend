@@ -1,15 +1,26 @@
+import Container, { Inject, Service } from "typedi";
 import { User } from "./user";
 import { UserDataSource } from "./user_data_source";
+import { execPath } from "process";
 
+@Service()
 export class UserService{
-    private userDataSource : UserDataSource = new UserDataSource(); 
+    private userDataSource: UserDataSource = Container.get(UserDataSource)
+
     constructor(){}
 
     public async login(user :User){
-
-        if("mrawa" == user.name){
-            throw Error("3omerek ma tet3ada")
+        let savedUser : User ;
+        savedUser = await this.userDataSource.findByEmail(user.email);
+        if(!savedUser){
+            throw Error("User don't exist, please create account")
+        } 
+        else{
+            // perform login
+            let generatedToken = ""
+            savedUser.token = generatedToken;
         }
-        await this.userDataSource.add(user);
+
+        return savedUser;
     }
 }

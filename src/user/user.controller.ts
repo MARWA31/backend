@@ -1,15 +1,16 @@
-import { Get, JsonController, Post,Put ,Delete, Param, Body } from "routing-controllers";
+import { Get, JsonController, Post,Put ,Delete, Param, Body, Req, Res } from "routing-controllers";
 import { User } from "./user";
 import { UserService } from "./user_service";
+import Container, { Inject } from "typedi";
 
 @JsonController("/user") 
 export class UserController {
-    private userService: UserService = new UserService();
-    private users: User[] = []; // Utilisation simplifiée pour stocker les utilisateurs en mémoire
-
+    private userService: UserService = Container.get(UserService)
+    constructor(){}
+    private users: User[] = [];
     
     @Get("/")
-    getAllUsers(): User[] {
+    getAllUsers(): User[] { 
 
         return this.users;
     }
@@ -21,8 +22,10 @@ export class UserController {
 
     @Post("/login")
     async login(@Body() user: User): Promise<User> {
-        await this.userService.login(user);
-        return user;
+        let tets = 1 + 1;
+        let logginUser = await this.userService.login(user);
+        logginUser  = new User("'i","fsf","emaikl")
+        return logginUser;
     }
 
     @Post("/")

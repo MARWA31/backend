@@ -4,6 +4,7 @@ export class User {
     id: string;
     name: string;
     email: string;
+    public token :String;
 
     constructor(id: string, name: string, email: string) {
         this.id = id; 
